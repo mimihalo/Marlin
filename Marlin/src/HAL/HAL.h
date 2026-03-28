@@ -27,6 +27,18 @@
   #define GCC_VERSION (__GNUC__ * 10000 + __GNUC_MINOR__ * 100 + __GNUC_PATCHLEVEL__)
 #endif
 
+// RISC-V fast ISR attribute macro
+// Defined before platform HAL include so platform HALs can use it internally
+#ifndef ISR_ATTR
+  #ifdef ESP32
+    #define ISR_ATTR IRAM_ATTR
+  #elif defined(CH32V30x)
+    #define ISR_ATTR __attribute__((section(".data")))
+  #else
+    #define ISR_ATTR
+  #endif
+#endif
+
 #include HAL_PATH(.., HAL.h)
 extern MarlinHAL hal;
 

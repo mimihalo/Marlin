@@ -1513,7 +1513,7 @@ HAL_STEP_TIMER_ISR() {
   FORCE_INLINE static constexpr int32_t MULT_Q(uint8_t q, int32_t x, int32_t y) { return (int64_t(x) * y) >> q; }
 #endif
 
-void Stepper::isr() {
+void ISR_ATTR Stepper::isr() {
 
   static hal_timer_t nextMainISR = 0;  // Interval until the next main Stepper Pulse phase (0 = Now)
 
@@ -1737,7 +1737,7 @@ void Stepper::isr() {
  * call to this method that might cause variation in the timing. The aim
  * is to keep pulse timing as regular as possible.
  */
-void Stepper::pulse_phase_isr() {
+void ISR_ATTR Stepper::pulse_phase_isr() {
 
   // If we must abort the current block, do so!
   if (abort_current_block) {
@@ -2394,7 +2394,7 @@ void Stepper::set_axis_moved_for_current_block() {
  * schedules planner blocks. This is executed after the step pulses
  * have been done, so it is less time critical.
  */
-hal_timer_t Stepper::block_phase_isr() {
+hal_timer_t ISR_ATTR Stepper::block_phase_isr() {
   #if DISABLED(OLD_ADAPTIVE_MULTISTEPPING)
     // If the ISR uses < 50% of MPU time, halve multi-stepping
     const hal_timer_t time_spent = HAL_timer_get_count(MF_TIMER_STEP);

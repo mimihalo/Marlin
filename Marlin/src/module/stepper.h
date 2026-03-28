@@ -539,13 +539,13 @@ class Stepper {
     }
 
     // The ISR scheduler
-    static void isr();
+    static void ISR_ATTR isr();
 
     // The stepper pulse ISR phase
-    static void pulse_phase_isr();
+    static void ISR_ATTR pulse_phase_isr();
 
     // The stepper block processing ISR phase
-    static hal_timer_t block_phase_isr();
+    static hal_timer_t ISR_ATTR block_phase_isr();
 
     #if HAS_ZV_SHAPING
       static void shaping_isr();

@@ -41,7 +41,7 @@
 
 static timg_dev_t *TG[2] = {&TIMERG0, &TIMERG1};
 
-const tTimerConfig timer_config[NUM_HARDWARE_TIMERS] = {
+DRAM_ATTR const tTimerConfig timer_config[NUM_HARDWARE_TIMERS] = {
   { TIMER_GROUP_0, TIMER_0, STEPPER_TIMER_PRESCALE, stepTC_Handler }, // 0 - Stepper
   { TIMER_GROUP_0, TIMER_1,    TEMP_TIMER_PRESCALE, tempTC_Handler }, // 1 - Temperature
   { TIMER_GROUP_1, TIMER_0,     PWM_TIMER_PRESCALE, pwmTC_Handler  }, // 2 - PWM
@@ -103,7 +103,7 @@ void HAL_timer_start(const uint8_t timer_num, const uint32_t frequency) {
 
   timer_enable_intr(timer.group, timer.idx);
 
-  timer_isr_register(timer.group, timer.idx, timer_isr, (void*)(uint32_t)timer_num, 0, nullptr);
+  timer_isr_register(timer.group, timer.idx, timer_isr, (void*)(uint32_t)timer_num, ESP_INTR_FLAG_LEVEL3 | ESP_INTR_FLAG_IRAM, nullptr);
 
   timer_start(timer.group, timer.idx);
 }

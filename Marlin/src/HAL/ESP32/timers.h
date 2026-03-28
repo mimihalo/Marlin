@@ -120,7 +120,7 @@ typedef struct {
 // Public Variables
 // ------------------------
 
-extern const tTimerConfig timer_config[];
+extern DRAM_ATTR const tTimerConfig timer_config[];
 
 // ------------------------
 // Public functions
